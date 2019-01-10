@@ -62,3 +62,7 @@ video {
 samp {
     font-size: small;
 }
+
+body { 
+    background-color: transparent;
+}

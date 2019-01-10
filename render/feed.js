@@ -25,7 +25,7 @@ feed.on('message', (msg) => {
   parseMsg(msg)
 })
 
-var player = process.env.VIDEO_PLAYER || 'ffmpeg'
+var player = process.env.VIDEO_PLAYER || 'mplayer'
 
 if (player === 'mplayer') {
   $('#video_space').hide()
