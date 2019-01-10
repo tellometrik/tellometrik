@@ -1,5 +1,3 @@
-![Tellometrik](render/tif.png)
-
 <h2 align="center">Tellometrik</h2>
 <h4 align="center">Desktop Electron app for Tello Ryze DJI drone</h4>
 
