@@ -8,7 +8,7 @@
     "standard": "./node_modules/standard/bin/cmd.js",
     "standard:fix": "./node_modules/standard/bin/cmd.js --fix",
     "start": "electron .",
-    "postinstall": "./node_modules/electron-rebuild/lib/src/cli.js"
+    "postinstall": "node  ./node_modules/electron-rebuild/lib/src/cli.js"
   },
   "keywords": [
     "tello",
