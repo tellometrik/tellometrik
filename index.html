@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tellometrik</title>
+
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
+  <link rel="stylesheet" href="node_modules/bootswatch/darkly/bootstrap.css" />
+  <link rel="stylesheet" href="render/tellometry.css" />
+  
+  <script src="node_modules/chart.js/dist/Chart.js"></script>
+  <script>window.jQuery = window.$ = require('jquery')</script>
+  <script src="node_modules/bootstrap/dist/js/bootstrap.js"></script>
+  <script src="node_modules/jmuxer/dist/jmuxer.min.js"></script>
+
+        <script type="text/javascript" src="render/ffmpeg-stream/Decoder.js"></script>
+        <script type="text/javascript" src="render/ffmpeg-stream/YUVCanvas.js"></script>
+        <script type="text/javascript" src="render/ffmpeg-stream/Player.js"></script>
+        <script type="text/javascript" src="render/ffmpeg-stream/stream.js"></script>
+        <script type="text/javascript" src="render/ffmpeg-stream/mp4.js"></script>
+        
+
+</head>
+  <body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="well">
+                    Tellometrik v<script type="text/javascript">document.write(require('./package.json').version)</script>
+                    <span>&nbsp;&nbsp;&nbsp;</span>
+                    <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
+                    <span>&nbsp;</span>
+                    Vx:
+                    <span id="headerVelocityX" class="headerNumber">0</span>
+                    Vy:
+                    <span id="headerVelocityY" class="headerNumber">0</span>
+                    Vz:
+                    <span id="headerVelocityZ" class="headerNumber">0</span>
+                    <span>&nbsp;&nbsp;</span>
+                     
+                    <span class="glyphicon glyphicon-scale" aria-hidden="true"></span>
+                    Roll:
+                    <span id="headerRoll" class="headerNumber">0</span>
+                    Pitch:
+                    <span id="headerPitch" class="headerNumber">0</span>
+                    Yaw:
+                    <span id="headerYaw" class="headerNumber">0</span>
+                    <span>&nbsp;&nbsp;</span>
+                    Battery:
+                    <span class="glyphicon glyphicon-flash" aria-hidden="true"></span>
+                    <span id="headerBattery" class="headerNumber">0</span>
+                    <span>&nbsp;&nbsp;</span>
+                    Height:
+                    <span class="glyphicon glyphicon-resize-vertical" aria-hidden="true"></span>
+                    
+                    <span id="headerHeight" class="headerNumber">0</span>
+                    <span>&nbsp;&nbsp;</span>
+                    Time:
+                    <span class="glyphicon glyphicon-plane" aria-hidden="true"></span>
+                    
+                    <span id="headerTime" class="headerNumber">0</span>
+                    <div class="btn-group" role="group" aria-label="..." style="float:right;">
+                      <button type="button" class="btn btn-default btn-sm" onclick="sendCommand('emergency')">Emergency</button>
+                      <button type="button" class="btn btn-default btn-sm" onclick="sendCommand('land')">Land</button>
+
+                      <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Commands
+                          <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <li><a onclick="sendCommand('takeoff')">Takeoff</a></li>
+                          <li><a onclick="sendCommand('streamon')">Stream On</a></li>
+                          <li><a onclick="sendCommand('streamoff')">Stream Off</a></li>
+                        </ul>
+                      </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- main -->
+        <div class="row">
+          <div class="col-xs-3 side-bar">
+                <div class="well">
+                  <div class="verticaltext">R/P/Y</div>
+                  <div class="chart-container">
+                    <canvas id="pry"></canvas>
+                  </div>
+                </div>
+
+                <div class="well">
+                 <div class="verticaltext">Velo</div>
+                  <div class="chart-container">
+                    <canvas id="v"></canvas>
+                  </div>
+                </div>
+
+                <div class="well">
+                 <div class="verticaltext">Temp</div>
+                  <div class="chart-container">
+                    <canvas id="temp"></canvas>
+                  </div>
+                </div>
+
+                <div class="well">
+                 <div class="verticaltext">Height</div>
+                  <div class="chart-container">
+                    <canvas id="height"></canvas>
+                  </div>
+                </div>
+            </div>
+            <div class="col-xs-6 main" id="video_space">
+                <div class="well">
+                  <div id="videoFeed">
+                        <video autoplay id="player"></video>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-3 side-bar">
+                <div class="well">
+                  <div class="verticaltext">Bat</div>
+                  <div class="chart-container">
+                    <canvas id="bat"></canvas>
+                  </div>
+                </div>
+
+                <div class="well">
+                 <div class="verticaltext">Baro</div>
+                  <div class="chart-container">
+                    <canvas id="baro"></canvas>
+                  </div>
+                </div>
+                <div class="well">
+                  <div class="verticaltext">Time</div>
+                  <div class="chart-container">
+                    <canvas id="time"></canvas>
+                  </div>
+                </div>
+
+                <div class="well">
+                 <div class="verticaltext">Acc</div>
+                  <div class="chart-container">
+                    <canvas id="a"></canvas>
+                  </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer-->
+         <div class="row">
+            <div class="col-sm-12">
+                <div class="well" id="controllerOutput">
+                </div>
+            </div>
+        </div>
+    </div>
+  <script src="render/graphs.js"></script>
+  <script src="render/feed.js"></script>
+  <script src="render/graphs-ws-client.js"></script>
+  <script src="render/logs-ws-client.js"></script>
+  </body>
+</html>
+
+

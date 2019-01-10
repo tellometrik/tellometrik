@@ -1,0 +1,64 @@
+
+#headerControls {
+    float:right;
+}
+
+.chart-container {
+	position: relative; 
+	height: 14vh;
+	margin: -0px;
+}
+.main .well
+{
+    height:62.9vh;
+  /*  margin-bottom: 0px;
+    padding: 0px;*/
+}
+
+.side-bar .well
+{
+    height:14vh;
+}
+
+.container-fluid
+{
+    height:90vh
+}
+
+.verticaltext {
+	transform: rotate(-90deg);
+	-ms-transform: rotate(-90deg);
+	-webkit-transform: rotate(-90deg);
+
+    position: absolute;
+    color: #4eb564;
+    margin-left: -40px;
+    font-size: 10px;
+}
+
+.headerNumber {
+    font-weight: 900;
+    font-size: large;
+}
+
+#videoFeed {
+    text-align: center;
+}
+
+canvas {
+    height: 62.9vh;
+    margin: -19px;
+    /* width: 90vh; */
+}
+
+video {
+    height: 45vh;
+    margin: -19px;
+}
+#controllerOutput {
+    overflow: auto;
+    height: 22vh;
+}
+samp {
+    font-size: small;
+}
