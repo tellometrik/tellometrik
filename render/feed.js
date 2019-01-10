@@ -1,3 +1,6 @@
+// Parts of this file are derived from https://github.com/SovGVD/nodetello so the NodeTello MIT license is also included here
+// This newly modified code is now licensed additionally under the GPL
+
 // Copyright 2019 Nikola Jokic (Croatia) <nikolajokic@protonmail.com>
 // This file is part of Tellometrik.
 
@@ -14,6 +17,30 @@
 // You should have received a copy of the GNU General Public License
 // along with Tellometrik.  If not, see <http://www.gnu.org/licenses/>.
 
+
+// MIT License
+
+// Copyright (c) 2018 Gleb Devyatkin
+
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+
+
 const dgram = require('dgram')
 const feed = dgram.createSocket('udp4')
 const ffmpeg = require('ffmpeg-binaries')
@@ -25,7 +52,7 @@ feed.on('message', (msg) => {
   parseMsg(msg)
 })
 
-var player = process.env.VIDEO_PLAYER || 'mplayer'
+var player = process.env.VIDEO_PLAYER || 'jmuxer'
 
 if (player === 'mplayer') {
   $('#video_space').hide()
@@ -50,6 +77,7 @@ if (player === 'mplayer') {
   // jmuxer
   var h264chunks = []
 
+  //3 is the smallest number that works for jmuxer
   var numChunks = 3
   var numChunkz = 0
 
