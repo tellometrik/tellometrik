@@ -14,31 +14,33 @@
 // You should have received a copy of the GNU General Public License
 // along with Tellometrik.  If not, see <http://www.gnu.org/licenses/>.
 
-var WiFiControl = require('wifi-control')
+var wifi = require('node-wifi')
 const WebSocket = require('ws')
 
 //  Initialize wifi-control package with verbose output
-WiFiControl.init({
-  debug: true
-})
+wifi.init({
+  iface: null // network interface, choose a random wifi interface if set to null
+});
 
 module.exports = function (wss) {
   function seekWifi () {
-    var ifaceState = WiFiControl.getIfaceState()
 
-    //  Try scanning for access points:
-    if (ifaceState.connection === 'connected' && ifaceState.ssid.indexOf('TELLO') > -1) {
-      return
-    }
+    wifi.getCurrentConnections(function(err, currentConnections) {
+      if (err) {
+        console.log(err);
+      }
+      if (currentConnections.length > 0 && currentConnections[0].ssid.indexOf('TELLO') > -1){
+        return
+      }
+    
+          sendLog('seeking Wifi enpoints, searching for TELLO*')
 
-    sendLog('seeking Wifi enpoints, searching for TELLO*')
-
-    WiFiControl.scanForWiFi(function (err, response) {
+    wifi.scan(function(err, response) {
       if (err) console.log(err)
       console.log(response)
-      for (var i = response.networks.length - 1; i >= 0; i--) {
-        if (response.networks[i].ssid.indexOf('TELLO') > -1) {
-          var results = WiFiControl.connectToAP(response.networks[i], function (err, response) {
+      for (var i = response.length - 1; i >= 0; i--) {
+        if (response[i].ssid.indexOf('TELLO') > -1) {
+          var results = wifi.connect(response[i], function (err, response) {
             if (err) {
               console.log(err)
               sendLog('Wifi connection error.')
@@ -52,6 +54,8 @@ module.exports = function (wss) {
         }
       };
     })
+
+    });
   }
 
   seekWifi()

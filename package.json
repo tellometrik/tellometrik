@@ -28,8 +28,8 @@
     "ffmpeg-binaries": "^4.0.0",
     "jmuxer": "^1.1.1",
     "jquery": "^3.3.1",
+    "node-wifi": "git+https://github.com/friedrith/node-wifi.git#3a815f1a5fdc2e2fc52cedb8079bdc996edcf1d3",
     "standard": "^12.0.1",
-    "wifi-control": "^2.0.1",
     "ws": "^6.1.2"
   },
   "devDependencies": {
