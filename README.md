@@ -27,7 +27,7 @@ npm start
 
 ## Video stream Overview
 
-To change the vide player set VIDEO_PLAYER environment variable to 'mplayer', 'ffmpeg' or 'jmuxer'
+To change the video player set the VIDEO_PLAYER environment variable to 'mplayer', 'ffmpeg' or 'jmuxer'
 
 ```bash
 # Set env variable
